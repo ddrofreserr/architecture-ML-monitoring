@@ -1,0 +1,6 @@
+# Python
+env_architects/
+__pycache__/
+
+# Данные
+data/raw/
