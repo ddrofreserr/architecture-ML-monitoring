@@ -7,3 +7,5 @@ def load_data(source: str) -> pd.DataFrame:
         return generate_synthetic_data()
     elif source == "db":
         return load_from_db()
+    elif source == 'external':
+        return None

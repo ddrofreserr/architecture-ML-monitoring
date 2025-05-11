@@ -1,17 +1,17 @@
 import pandas as pd
 import os
-from catboost import CatBoostClassifier, Pool
+from catboost import CatBoostClassifier
 from sklearn.metrics import f1_score
-from src.preprocess import preprocess
+from model_utils import preprocess, get_best_params, plot_feature_importance
+
 
 def train_model(df: pd.DataFrame, retrain: bool = False) -> None:
     
     model_path = "./models/model.cbm"
 
-    X_train, X_val, y_train, y_val = preprocess(df)
+    cat_features = list(df.select_dtypes(include=['object']).columns)
 
-    # когда будут признаки (скорее всего не будет)
-    # cat_features = X_train.select_dtypes(include=["названия колонок"]).columns.tolist()
+    X_train, X_val, y_train, y_val = preprocess(df)
 
     # дообучение существующей модели
     if retrain and os.path.exists(model_path):
@@ -21,14 +21,13 @@ def train_model(df: pd.DataFrame, retrain: bool = False) -> None:
 
     # обучение новой модели
     else:
+        # подбор лучших гиперпараметров
+        best_params = get_best_params(X_train, y_train, cat_features)
+
         model = CatBoostClassifier(
-            iterations=1000,
-            learning_rate=0.05,
-            depth=6,
-            eval_metric="Accuracy",
-            # cat_features=cat_features,
-            verbose=100,
-            random_seed=42
+            **best_params,
+            cat_features=cat_features,
+            verbose=100
         )
         print("Начинаем обучение новой модели")
 
@@ -39,8 +38,11 @@ def train_model(df: pd.DataFrame, retrain: bool = False) -> None:
         use_best_model=False
     )
 
-    print('F1 score:', f1_score(y_val, model.predict(X_val))) # оценка точности
-    # print(model.feature_importances_) # влияние признаков
+    # оценка точности на валидационной выборке
+    print('F1 score:', f1_score(y_val, model.predict(X_val))) 
+
+    # построение графиков влияния признаков
+    plot_feature_importance(model, X_val, y_val)
 
     # сохранение модели
     os.makedirs("./models", exist_ok=True)
