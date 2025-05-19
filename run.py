@@ -3,6 +3,7 @@ from data.data_loader import load_data
 from src.train import train_model
 from src.predict import predict, predict_with_explanation
 
+
 def main(source="synthetic", mode="train", retrain=False, explain=True):
     data = load_data(source)
 
