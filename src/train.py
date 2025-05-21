@@ -2,7 +2,7 @@ import pandas as pd
 import os
 from catboost import CatBoostClassifier
 from sklearn.metrics import f1_score
-from model_utils import preprocess, get_best_params, plot_feature_importance
+from .model_utils import preprocess, get_best_params, plot_feature_importance
 
 
 def train_model(df: pd.DataFrame, retrain: bool = False) -> None:

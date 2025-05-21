@@ -15,4 +15,4 @@ def load_from_db() -> pd.DataFrame:
     df['target'] = df['product'] // 100
     df = df.drop(['id', 'product'], axis=1)
     
-    return df
+    return df.head(100)
