@@ -6,6 +6,9 @@ from .model_utils import preprocess, get_best_params, plot_feature_importance
 
 
 def train_model(df: pd.DataFrame, retrain: bool = False) -> None:
+    '''
+    Обучает новые модели или дообучает старые, если режим обучения
+    '''
     
     model_path = "./models/model.cbm"
 
