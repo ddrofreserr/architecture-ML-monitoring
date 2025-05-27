@@ -24,7 +24,7 @@ if __name__ == "__main__":
     parser.add_argument("--mode", default="predict", choices=["train", "predict"])
     parser.add_argument("--retrain", action="store_true")
     parser.add_argument("--explain", action="store_true")
-    parser.set_defaults(explain=True)
+    # parser.set_defaults(explain=True)
     args = parser.parse_args()
     main(source=args.source, mode=args.mode, retrain=args.retrain, explain=args.explain)
     # main(source='db', mode=args.mode)
