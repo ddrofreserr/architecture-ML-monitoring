@@ -24,7 +24,7 @@ def generate_synthetic_data(n: int = 1000) -> pd.DataFrame:
         'Temperature': temperature,
         'Humidity': humidity,
         'Vibration': vibrations,
-        'Crack Width':np.random.lognormal(mean=-3, sigma=0.3, size=n), 
+        # 'Crack Width':np.random.lognormal(mean=-3, sigma=0.3, size=n), 
         'Material Deformation': np.random.normal(loc=0.01, scale=0.002, size=n)
     }
 
