@@ -40,7 +40,7 @@ def get_best_params(X, y, cat_features):
 
     random_search = RandomizedSearchCV(
         model, param_distributions=param_dist, random_state=42,
-        n_iter=10, scoring='f1', cv=5, verbose=3, 
+        n_iter=5, scoring='f1', cv=5, verbose=3, 
         # n_jobs=-1
     )
 
